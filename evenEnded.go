@@ -7,6 +7,7 @@ import (
 func main() {
     count := 0
     for i:= 1000; i <= 9999; i=i+1 {
+        //Avoid repetition like a * b and b * a
         for j:= i; j <= 9999; j=j+1 {
 
             num := i * j;
