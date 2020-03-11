@@ -26,11 +26,10 @@ func main() {
 		fmt.Println("x is not in the range")
 	}
 
-
 	a, b := 1, 2
 
 	//Value can be computed before the condition
-	if add := a + b, add < 10 {
+	if add := a + b; add < 10 {
 		fmt.Println("Addition and condition")
 	}
 
@@ -39,21 +38,21 @@ func main() {
 
 	//Classic switch, no break needed
 	switch x {
-		case 1 :
-			fmt.Println(" Case 1")
-		case 2 :
-			fmt.Println(" Case 2")
-		case 3 :
-			fmt.Println(" Case 3")
-		default :
-			fmt.Println(" Case Default")
+	case 1:
+		fmt.Println(" Case 1")
+	case 2:
+		fmt.Println(" Case 2")
+	case 3:
+		fmt.Println(" Case 3")
+	default:
+		fmt.Println(" Case Default")
 	}
 
 	//Naked switch where conditions are explicitly specified
 	switch {
-		x > 100 :
-			fmt.Println("x > 100")
-		x < 100:
-			fmt.Println("x < 100")
+	case x > 100:
+		fmt.Println("x > 100")
+	case x < 100:
+		fmt.Println("x < 100")
 	}
 }
