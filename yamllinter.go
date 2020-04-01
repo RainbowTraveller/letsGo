@@ -1,3 +1,7 @@
+/*
+Execute with schema : GoRun % schema.yaml s
+Execute generic yaml file : GoRun % schema.yaml g
+*/
 package main
 
 import (
