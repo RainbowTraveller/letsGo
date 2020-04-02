@@ -10,6 +10,7 @@ import (
 	"os"
 
 	"gopkg.in/yaml.v2"
+	//"go-yaml/yaml"
 )
 
 const (
@@ -50,7 +51,7 @@ type service struct {
 }
 
 type credential struct {
-	ClientId       string         `yaml:"clientId"`
+	ClientId       int            `yaml:"clientId"`
 	ClientSecret   string         `yaml:"clientSecret"`
 	TokenURL       string         `yaml:"tokenURL"`
 	EndpointParams endPointParams `yaml:"endpointParams"`
@@ -92,7 +93,8 @@ func main() {
 			*/
 		case schema:
 			var schemaBackedYaml sampleSchema
-			err := yaml.Unmarshal([]byte(src), &schemaBackedYaml)
+			//err := yaml.Unmarshal([]byte(src), &schemaBackedYaml)
+			err := yaml.UnmarshalStrict([]byte(src), &schemaBackedYaml)
 			CheckError(err)
 			fmt.Println(schemaBackedYaml)
 
