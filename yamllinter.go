@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 
 	"gopkg.in/yaml.v2"
 	//"go-yaml/yaml"
@@ -62,12 +63,32 @@ type endPointParams struct {
 	GrantType []string `yaml:"grant_type"`
 }
 
+func getLineNoAndMsg(errorMsg string) (no string, msg string) {
+	from := strings.Index(errorMsg, "line")
+	to := strings.LastIndex(errorMsg, ":")
+	// fmt.Println(from)
+	// fmt.Println(to)
+	line := errorMsg[from:to]
+	no = strings.Split(line, " ")[1]
+	prev := errorMsg[:from]
+	// fmt.Println(prev)
+
+	post := errorMsg[to+1:]
+	// fmt.Println(post)
+	var msgBuilder strings.Builder
+	msgBuilder.WriteString(prev)
+	msgBuilder.WriteString(post)
+	//# fmt.Println(line)
+	//# fmt.Println(msgBuilder.String())
+	//# fmt.Println(no)
+	return no, msgBuilder.String()
+}
 func main() {
 
 	argsWithProg := os.Args
 	filename := argsWithProg[1]
 	option := argsWithProg[2]
-	fmt.Println(filename)
+	//fmt.Println(filename)
 	if len(filename) > 0 {
 		src, openError := ioutil.ReadFile(filename)
 		CheckError(openError)
@@ -95,9 +116,25 @@ func main() {
 			var schemaBackedYaml sampleSchema
 			//err := yaml.Unmarshal([]byte(src), &schemaBackedYaml)
 			err := yaml.UnmarshalStrict([]byte(src), &schemaBackedYaml)
-			CheckError(err)
+			//if reflect.TypeOf(err) == reflect.TypeOf(yaml.TypeError) {
+			//	for _, msg := range err.Errors {
+			//		fmt.Errorf(msg)
+			//	}
+			//}
+			//CheckError(err)
+			// fmt.Printf("Error : %s \n", err.Error())
+			if err != nil {
+				errorMsg := err.Error()
+				fmt.Println("")
+				fmt.Println("::::::::::::::::: Original Message::::::::::::::")
+				fmt.Println(errorMsg)
+				num, msg := getLineNoAndMsg(errorMsg)
+				fmt.Println("::::::::::::::::: Unmarshalled Data ::::::::::::::")
+				fmt.Println()
+				fmt.Printf("Line no. : %s\n", num)
+				fmt.Printf("mssage : %s\n", msg)
+			}
 			fmt.Println(schemaBackedYaml)
-
 		}
 	}
 
