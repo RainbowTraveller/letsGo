@@ -3,11 +3,9 @@ service:
     name: Automation
 
 credential:
-    clientId: 10
-    clientSecret: secret
     tokenURL: https://google.com
     endpointParams:
         grant_type:
-    - storage_limit
+        - storage_limit
     authStyle: 2
 
